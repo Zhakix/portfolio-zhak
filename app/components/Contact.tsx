@@ -26,7 +26,7 @@ const SOCIALS = [
   },
   {
     label: 'CV', 
-    href: '/CV.pdf',
+    href: '/cv.pdf',
     isText: true,
   },
 ]
