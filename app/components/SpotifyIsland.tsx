@@ -210,7 +210,7 @@ export default function SpotifyIsland() {
     }
     fetchTrack().then(ok => { if (!ok) loadFallback(0, false) })
     startTicker()
-    const interval = setInterval(fetchTrack, 10_000)
+    const interval = setInterval(fetchTrack, 30_000)
     const onDocClick = (e: MouseEvent) => { if (isOpenRef.current && widgetRef.current && !widgetRef.current.contains(e.target as Node)) closeIsland() }
     const onEsc      = (e: KeyboardEvent) => { if (e.key === 'Escape') closeIsland() }
     document.addEventListener('click',   onDocClick)

@@ -70,15 +70,15 @@ export default function About() {
               onClick={() => setIsModalOpen(true)}
             >
               <Image 
-                src="/profile.jpg"
-                alt="Mybini"
+                src="/zhakimg.jpg"
+                alt="Myfoto"
                 width={110}
                 height={110}
                 className="avi-img"
               />
             </div>
             <div className="avi-name">Muhammad Rifki Zhaki</div>
-            <div className="avi-role">Full-Stack Developer &amp; UX Engineer</div>
+            <div className="avi-role">Full-Stack Developer &amp; AI Engineer</div>
             <div className="badges">
               <span className="badge">Depok</span>
               <span className="badge">6 Yrs Exp</span>
@@ -128,7 +128,7 @@ export default function About() {
         >
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <Image 
-              src="/profile.jpg"
+              src="/zhakimg.jpg"
               alt="Muhammad Rifki Zhaki"
               width={600}
               height={600}

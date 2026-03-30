@@ -3,7 +3,7 @@ import './styles/globals.css'
 
 export const metadata: Metadata = {
   title: 'ZhAk — Portfolio',
-  description: 'Full-Stack Developer & UX Engineer based in Depok.',
+  description: 'Full-Stack Developer & AI Engineer based in Depok.',
 }
 
 export default function RootLayout({

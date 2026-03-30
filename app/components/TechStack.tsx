@@ -102,7 +102,7 @@ export default function TechStack() {
         if (!oneSetW || dragging) return
         vel += (speed - vel) * 0.032; x += vel
         if (x > 0) x -= oneSetW; if (x < -oneSetW) x += oneSetW
-        gsap.set(row, { x, force3D: true })
+        row.style.transform = `translate3d(${x}px, 0, 0)`
       }
       gsap.ticker.add(tickFn)
 

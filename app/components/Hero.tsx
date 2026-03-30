@@ -11,35 +11,46 @@ export default function Hero() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
 
-    // ── Custom cursor ──
+    // ── Custom cursor (optimized) ──
     const cur = cursorRef.current
     const tr  = trailRef.current
     if (!cur || !tr) return
 
     let mx = 0, my = 0, tx = 0, ty = 0
+    let lastMoveTime = 0
+    const DEBOUNCE_MS = 16
 
     const onMove = (e: MouseEvent) => {
+      const now = performance.now()
+      if (now - lastMoveTime < DEBOUNCE_MS) return
+      lastMoveTime = now
       mx = e.clientX; my = e.clientY
-      gsap.set(cur, { x: mx, y: my })
+      if (cur) cur.style.left = mx + 'px'; cur.style.top = my + 'px'
     }
-    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mousemove', onMove, { passive: true })
 
     let rafId: number
     const loop = () => {
       tx += (mx - tx) * 0.1
       ty += (my - ty) * 0.1
-      gsap.set(tr, { x: tx, y: ty })
+      if (tr) tr.style.left = tx + 'px'; tr.style.top = ty + 'px'
       rafId = requestAnimationFrame(loop)
     }
     loop()
 
+    const interactEls: Array<{ el: Element, enter: EventListener, leave: EventListener }> = []
     document.querySelectorAll('a,button,.tc,.pc,.tl').forEach(el => {
-      el.addEventListener('mouseenter', () =>
-        gsap.to([cur, tr], { width: 14, height: 14, duration: 0.2 })
-      )
-      el.addEventListener('mouseleave', () =>
-        gsap.to([cur, tr], { width: 8, height: 8, duration: 0.2 })
-      )
+      const enter = () => {
+        if (cur) gsap.to(cur, { width: 14, height: 14, duration: 0.15 })
+        if (tr) gsap.to(tr, { width: 14, height: 14, duration: 0.15 })
+      }
+      const leave = () => {
+        if (cur) gsap.to(cur, { width: 8, height: 8, duration: 0.15 })
+        if (tr) gsap.to(tr, { width: 8, height: 8, duration: 0.15 })
+      }
+      el.addEventListener('mouseenter', enter)
+      el.addEventListener('mouseleave', leave)
+      interactEls.push({ el, enter, leave })
     })
 
     // ── Hero text split & animate ──
@@ -118,7 +129,12 @@ export default function Hero() {
 
     return () => {
       document.removeEventListener('mousemove', onMove)
-      cancelAnimationFrame(rafId)
+      if (rafId) cancelAnimationFrame(rafId)
+      interactEls.forEach(({ el, enter, leave }) => {
+        el.removeEventListener('mouseenter', enter)
+        el.removeEventListener('mouseleave', leave)
+      })
+      gsap.killTweensOf('#orb1, #orb2, #orb3')
       ScrollTrigger.getAll().forEach(t => t.kill())
     }
   }, [])
