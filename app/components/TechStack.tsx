@@ -26,7 +26,7 @@ const ROW2: TechItem[] = [
   { name: 'Three.js',   iconName: 'threejs' },
   { name: 'PostgreSQL', iconName: 'postgresql' },
   { name: 'MongoDB',    iconName: 'mongodb' },
-  { name: 'Redis',      iconName: 'redis' },
+  { name: 'After Effects',      iconName: 'ae' },
   { name: 'Docker',     iconName: 'docker' },
   { name: 'AWS',        iconName: 'aws' },
   { name: 'Figma',      iconName: 'figma' },
